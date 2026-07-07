@@ -1,0 +1,60 @@
+name: Release
+
+# Creates a git tag and a GitHub Release, with notes taken from the matching
+# CHANGELOG.md section and a ready-to-load zip of the extension attached.
+# Trigger it manually from the Actions tab (or via API) with the tag to cut.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v1.0.0 (must match manifest.json version)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches manifest version
+        run: |
+          MANIFEST_VERSION=$(node -p "require('./manifest.json').version")
+          TAG="${{ inputs.tag }}"
+          if [ "v${MANIFEST_VERSION}" != "${TAG}" ]; then
+            echo "Tag ${TAG} does not match manifest version v${MANIFEST_VERSION}" >&2
+            exit 1
+          fi
+
+      - name: Extract changelog section
+        run: |
+          VERSION="${{ inputs.tag }}"
+          VERSION="${VERSION#v}"
+          # Take everything from this version's heading to the next "## " heading.
+          awk -v ver="$VERSION" '
+            $0 ~ "^## " ver " " || $0 ~ "^## " ver "$" { found=1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "No CHANGELOG.md section found for ${VERSION}" >&2
+            exit 1
+          fi
+
+      - name: Build extension zip
+        run: |
+          zip -r fullpagecap-${{ inputs.tag }}.zip \
+            manifest.json background.js content.js editor options shared icons
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ inputs.tag }}" \
+            --target "${{ github.sha }}" \
+            --title "FullPageCap ${{ inputs.tag }}" \
+            --notes-file release-notes.md \
+            "fullpagecap-${{ inputs.tag }}.zip"

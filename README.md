@@ -101,6 +101,17 @@ page with a fixed header, and verifies: the editor opens, the stitched size
 is exact, the color bands are in order, annotations + undo work, crop works,
 and the PNG/PDF downloads are valid files.
 
+## Releasing
+
+1. Bump `version` in `manifest.json` (and `package.json`), add a section to
+   `CHANGELOG.md`, merge to `main`
+2. Run the **Release** workflow (Actions tab → Release → Run workflow) with
+   the tag, e.g. `v1.0.0`
+
+The workflow verifies the tag matches the manifest version, creates the git
+tag and GitHub Release with the changelog section as notes, and attaches a
+ready-to-load zip of the extension.
+
 ## Permissions
 
 - `activeTab`, `scripting` — inject the content script into the current tab
