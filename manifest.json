@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "FullPageCap - Full Page Screen Capture",
+  "short_name": "FullPageCap",
+  "version": "1.0.0",
+  "description": "Capture a screenshot of an entire web page — scrolls, stitches, lets you annotate, then export as PNG, JPEG or PDF.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Capture full page (Alt+Shift+P)",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "commands": {
+    "capture-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Capture the full page"
+    }
+  },
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

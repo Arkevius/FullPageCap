@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FullPageCap Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../icons/icon48.png" alt="" width="32" height="32">
+      <div>
+        <h1>FullPageCap</h1>
+        <p>Full page screen capture — options</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Export</h2>
+
+      <label class="row">
+        <span>Default format</span>
+        <select id="format">
+          <option value="png">PNG</option>
+          <option value="jpeg">JPEG</option>
+          <option value="pdf">PDF</option>
+        </select>
+      </label>
+
+      <label class="row">
+        <span>JPEG quality <em id="jpegQuality-val"></em></span>
+        <input type="range" id="jpegQuality" min="30" max="100" step="1">
+      </label>
+
+      <label class="row">
+        <span>PDF paper size</span>
+        <select id="pdfPaper">
+          <option value="image">One long page (image size)</option>
+          <option value="a4">A4 pages</option>
+          <option value="letter">Letter pages</option>
+        </select>
+      </label>
+
+      <label class="row">
+        <span>
+          Filename template
+          <small>Placeholders: {title} {host} {date} {time} {timestamp}</small>
+        </span>
+        <input type="text" id="filenameTemplate" spellcheck="false">
+      </label>
+
+      <label class="row">
+        <span>After capture</span>
+        <select id="afterCapture">
+          <option value="editor">Open the editor</option>
+          <option value="download">Open the editor and download immediately</option>
+        </select>
+      </label>
+    </section>
+
+    <section>
+      <h2>Capture</h2>
+
+      <label class="row">
+        <span>
+          Extra delay per scroll step
+          <small>Give lazy-loading pages time to render (milliseconds)</small>
+        </span>
+        <input type="number" id="captureDelay" min="0" max="5000" step="50">
+      </label>
+
+      <label class="row check">
+        <input type="checkbox" id="hideFixed">
+        <span>Hide fixed &amp; sticky elements after the first row <small>prevents repeated headers in the stitched image</small></span>
+      </label>
+
+      <label class="row check">
+        <input type="checkbox" id="hideScrollbars">
+        <span>Hide scrollbars during capture</span>
+      </label>
+
+      <label class="row">
+        <span>
+          Maximum capture height
+          <small>Safety cap for infinite-scroll pages, in CSS pixels (0 = unlimited)</small>
+        </span>
+        <input type="number" id="maxCaptureHeight" min="0" max="500000" step="1000">
+      </label>
+    </section>
+
+    <section>
+      <h2>Shortcut</h2>
+      <p class="hint">
+        The default shortcut is <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>.
+        Change it at <code>chrome://extensions/shortcuts</code>.
+      </p>
+    </section>
+
+    <footer>
+      <span id="save-state"></span>
+      <button id="reset">Restore defaults</button>
+    </footer>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

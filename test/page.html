@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FullPageCap test page</title>
+  <style>
+    body { margin: 0; font: 24px/1.4 system-ui, sans-serif; }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: #222;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    section {
+      height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 64px;
+      font-weight: 700;
+    }
+    footer { height: 123px; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+  <header>Fixed header — should appear only once at the top</header>
+  <section style="background:#e8352a">Band 1</section>
+  <section style="background:#ff9800">Band 2</section>
+  <section style="background:#34a853">Band 3</section>
+  <section style="background:#1a73e8">Band 4</section>
+  <section style="background:#a142f4">Band 5</section>
+  <footer>THE END</footer>
+</body>
+</html>
